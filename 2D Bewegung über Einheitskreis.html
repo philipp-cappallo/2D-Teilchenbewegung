@@ -1,0 +1,41 @@
+<html>
+<body>
+
+
+<h2>Movement simulation Einheitskreis (planar)</h2>
+x-Koordinate
+<p id="x"></p>
+y-Koordinate
+<p id="y"></p>
+<input id="number">Sprünge</input>
+<button onclick="random()">Simulate</button>
+
+<script>
+function random(){
+var number=document.getElementById("number").value;
+//Anzahl der Durchläufe wird Textfeld entnommen
+var x_richtung=0;
+var y_richtung=0;
+//Startpunkte des Teichens im "Koordinatensystem"
+var i;
+for (i = 0; i < number; i++) {
+  degree = Math.floor(360*Math.random())+1;
+  //Zufälliger Winkel in Grad wird generiert
+  bogenmass = (degree/360)*2*Math.PI
+  //Umrechnen in Bogenmaß
+  
+  
+x_richtung = x_richtung + Math.cos(bogenmass)
+y_richtung = y_richtung + Math.sin(bogenmass)  
+//x und y Komponente werden gemäß trigonometrischer Funktionen erweitert. Durch i loop immer vorheriger Wert plus neuen Anteilen in x und y Richtung. 
+//Wird statt "+ Math.cos(bogenmass)" einfach "+1" geschrieben, so wird erwartungsgemäß die Anzahl der Sprünge ausgegeben.
+  
+}
+document.getElementById("x").innerHTML = x_richtung;
+document.getElementById("y").innerHTML = y_richtung;
+//Ausgabe
+}</script>
+
+
+</body>
+</html>
