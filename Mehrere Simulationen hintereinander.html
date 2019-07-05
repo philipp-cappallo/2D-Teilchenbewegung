@@ -86,7 +86,7 @@ y_richtung = y_richtung + Math.sin(bogenmass)
 //x und y Komponente werden gemäß trigonometrischer Funktionen erweitert. Durch i loop immer vorheriger Wert plus neuen Anteilen in x und y Richtung. 
 //Wird statt "+ Math.cos(bogenmass)" einfach "+1" geschrieben, so wird erwartungsgemäß die Anzahl der Sprünge ausgegeben.
 var abstand_sp = Math.round(Math.sqrt(Math.pow(x_richtung, 2)+Math.pow(y_richtung, 2))*100)/100;
-//Abstand zum Startpunkt
+//Abstand zum Startpunkt auf 2 Nachkommastellen
 if (abstand_sp_max < abstand_sp) {
 abstand_sp_max=abstand_sp
 }
