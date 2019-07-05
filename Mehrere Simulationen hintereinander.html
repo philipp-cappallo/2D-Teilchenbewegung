@@ -17,7 +17,7 @@
           <th>x-Koordinate Ende</th>
           <th> y-Koordinate Ende</th>
           <th>maximaler Abstand zum Startpunkt</th>
-          <th>(Abstand/zurückgelegte Strecke)*100</th>
+          <th>(maxAbstand^2)/Anzahl Sprünge</th>
         </tr>
     </thead>
     <tbody>
@@ -34,9 +34,13 @@
 
 <input id="spruenge">Sprünge (Entspricht zurückgelegter Strecke da bei jedem Sprung 1 unit zurückgelegt wird)</input> 
 <p></p>
-<input id="simulationen">Simulationen</input>
+<input id="simulationen">Simulationen (werden in der Tabelle untereinander aufgelistet)</input>
 <p></p>
 <button onclick="random()">Simulate</button>
+<p></p>
+∆x^2 = 2dD∆t <br>
+Der Quotient aus dem Quadrat des maximalen Abstandes und der Anzahl der Sprünge (letzte Spalte der Tabelle) sollte also unabhängig von der Anzahl der Sprünge bei mehreren Simulationen im Durchschnitt den gleichen Zahlenwert liefern.
+
 
 <script>
 function random(){
@@ -44,14 +48,14 @@ var simulationen = document.getElementById("simulationen").value;
 var spruenge = document.getElementById("spruenge").value;
 //Anzahl der Durchläufe wird Textfeld entnommen
 var abstand_sp_max=0;
-var abstand_sp=0;
+var abstand_sp;
 var x_richtung=0;
 var y_richtung=0;
 var x_gerundet_ausg = "";
 var y_gerundet_ausg = "";
 var abstand_sp_max_ausg = "";
 var abstand_normiert_ausg = "";
-//Startpunkte des Teichens im "Koordinatensystem"
+//Variablen definieren 
 
 var j;
 var i;
@@ -60,8 +64,7 @@ for (j=0; j < simulationen; j++) {
 var x_richtung=0;
 var y_richtung=0;
 var abstand_sp_max=0;
-var abstand_sp=0;
-//Muss hier für jede Simulation wieder auf 0 gesetzt werden sonst kommen falsche werte raus!!!!
+//Muss hier für jede Simulation wieder auf 0 gesetzt werden sonst kommen falsche werte raus(!!!!)
 
 for (i = 0; i < spruenge; i++) {
   degree = Math.floor(360*Math.random())+1;
@@ -87,8 +90,8 @@ abstand_sp_max=abstand_sp
 var x_gerundet = Math.round(x_richtung*100)/100 ;
 var y_gerundet = Math.round(y_richtung*100)/100 ;
 //Runden auf 2 Nachkommastellen
-var abstand_normiert = (abstand_sp_max / spruenge)*100
-//Wieviel Prozent der schritte wurden genutzt um sich vom Startpunkt weg zu bewegen
+var abstand_normiert = Math.round((Math.pow(abstand_sp_max, 2) / spruenge)*100)/100
+//Quotient aus Abstandsquadrat und Anzahl der Sprünge (sollte proportional zu delta t sein) auf 2 Nachkommastellen
 
 
   x_gerundet_ausg += + x_gerundet + "<br>";
