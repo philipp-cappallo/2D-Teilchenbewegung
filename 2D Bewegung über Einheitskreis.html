@@ -1,38 +1,79 @@
 <html>
+<head>
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+</style>
+</head>
 <body>
 
 
 <h2>Movement simulation Einheitskreis (planar)</h2>
-x-Koordinate
-<p id="x"></p>
-y-Koordinate
-<p id="y"></p>
-<input id="number">Spr¸nge</input>
+
+<table class="tg">
+    <thead>
+        <tr>
+          <th>x-Koordinate Ende</th>
+          <th> y-Koordinate Ende</th>
+          <th>maximaler Abstand zum Startpunkt</th>
+          <th>(Abstand/zur√ºckgelegte Strecke)*100</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><p id="x"></p></td>
+          <td><p id="y"></p></td>
+          <td><p id="abstand"></p></td>
+          <td><p id="abstand_norm"></p></td>
+        </tr>
+    </tbody>
+
+</table>
+<p></p>
+
+<input id="spruenge">Spr√ºnge (Entspricht zur√ºckgelegter Strecke da bei jedem Sprung 1 unit zur√ºckgelegt wird)</input>
 <button onclick="random()">Simulate</button>
 
 <script>
 function random(){
-var number=document.getElementById("number").value;
-//Anzahl der Durchl‰ufe wird Textfeld entnommen
+var spruenge = document.getElementById("spruenge").value;
+//Anzahl der Durchl√§ufe wird Textfeld entnommen
 var x_richtung=0;
 var y_richtung=0;
 //Startpunkte des Teichens im "Koordinatensystem"
 var i;
-for (i = 0; i < number; i++) {
+var abstand_sp_max=0;
+for (i = 0; i < spruenge; i++) {
   degree = Math.floor(360*Math.random())+1;
-  //Zuf‰lliger Winkel in Grad wird generiert
+  //Zuf√§lliger Winkel in Grad wird generiert
   bogenmass = (degree/360)*2*Math.PI
-  //Umrechnen in Bogenmaﬂ
+  //Umrechnen in Bogenma√ü
   
   
 x_richtung = x_richtung + Math.cos(bogenmass)
 y_richtung = y_richtung + Math.sin(bogenmass)  
-//x und y Komponente werden gem‰ﬂ trigonometrischer Funktionen erweitert. Durch i loop immer vorheriger Wert plus neuen Anteilen in x und y Richtung. 
-//Wird statt "+ Math.cos(bogenmass)" einfach "+1" geschrieben, so wird erwartungsgem‰ﬂ die Anzahl der Spr¸nge ausgegeben.
-  
+//x und y Komponente werden gem√§√ü trigonometrischer Funktionen erweitert. Durch i loop immer vorheriger Wert plus neuen Anteilen in x und y Richtung. 
+//Wird statt "+ Math.cos(bogenmass)" einfach "+1" geschrieben, so wird erwartungsgem√§√ü die Anzahl der Spr√ºnge ausgegeben.
+
+var abstand_sp = Math.round(Math.sqrt(Math.pow(x_richtung, 2)+Math.pow(y_richtung, 2))*100)/100;
+//Abstand zum Startpunkt
+if (abstand_sp > abstand_sp_max) {
+abstand_sp_max=abstand_sp
 }
-document.getElementById("x").innerHTML = x_richtung;
-document.getElementById("y").innerHTML = y_richtung;
+//√úberpr√ºfen ob Abstand des Schrittes i gr√∂√üer als maximaler Abstand  
+}
+
+
+var x_gerundet = Math.round(x_richtung*100)/100;
+var y_gerundet = Math.round(y_richtung*100)/100;
+//Runden auf 2 Nachkommastellen
+var abstand_normiert = (abstand_sp_max / spruenge)*100
+//Wieviel Prozent der schritte wurden genutzt um sich vom Startpunkt weg zu bewegen
+document.getElementById("x").innerHTML = x_gerundet;
+document.getElementById("y").innerHTML = y_gerundet;
+document.getElementById("abstand").innerHTML = abstand_sp_max;
+document.getElementById("abstand_norm").innerHTML = abstand_normiert;
 //Ausgabe
 }</script>
 
