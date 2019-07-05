@@ -25,12 +25,22 @@
           <td><p id="x"></p></td>
           <td><p id="y"></p></td>
           <td><p id="abstand"></p></td>
-          <td><p id="abstand_norm"></p></td>
+          <td><p id="abstand_norm"></p>
+          </td>
         </tr>
     </tbody>
 
 </table>
 <p></p>
+<table class="tg">
+<thead>
+        <tr>
+        <th> Durchschnitt (maxAbstandsquadrat/Sprünge): </th>
+        <th><p id="durchsch_abstand_norm"><p/></th>
+        </tr>
+</thead>
+</table>
+<p> </p>
 
 <input id="spruenge">Sprünge (Entspricht zurückgelegter Strecke da bei jedem Sprung 1 unit zurückgelegt wird)</input> 
 <p></p>
@@ -48,6 +58,7 @@ var simulationen = document.getElementById("simulationen").value;
 var spruenge = document.getElementById("spruenge").value;
 //Anzahl der Durchläufe wird Textfeld entnommen
 var abstand_sp_max=0;
+var sum_abstand_normiert=0;
 var abstand_sp;
 var x_richtung=0;
 var y_richtung=0;
@@ -56,16 +67,13 @@ var y_gerundet_ausg = "";
 var abstand_sp_max_ausg = "";
 var abstand_normiert_ausg = "";
 //Variablen definieren 
-
 var j;
 var i;
 for (j=0; j < simulationen; j++) {
-
 var x_richtung=0;
 var y_richtung=0;
 var abstand_sp_max=0;
 //Muss hier für jede Simulation wieder auf 0 gesetzt werden sonst kommen falsche werte raus(!!!!)
-
 for (i = 0; i < spruenge; i++) {
   degree = Math.floor(360*Math.random())+1;
   //Zufälliger Winkel in Grad wird generiert
@@ -77,7 +85,6 @@ x_richtung = x_richtung + Math.cos(bogenmass)
 y_richtung = y_richtung + Math.sin(bogenmass)  
 //x und y Komponente werden gemäß trigonometrischer Funktionen erweitert. Durch i loop immer vorheriger Wert plus neuen Anteilen in x und y Richtung. 
 //Wird statt "+ Math.cos(bogenmass)" einfach "+1" geschrieben, so wird erwartungsgemäß die Anzahl der Sprünge ausgegeben.
-
 var abstand_sp = Math.round(Math.sqrt(Math.pow(x_richtung, 2)+Math.pow(y_richtung, 2))*100)/100;
 //Abstand zum Startpunkt
 if (abstand_sp_max < abstand_sp) {
@@ -85,30 +92,29 @@ abstand_sp_max=abstand_sp
 }
 //Überprüfen ob Abstand des Schrittes i größer als maximaler Abstand  
 }
-
-
 var x_gerundet = Math.round(x_richtung*100)/100 ;
 var y_gerundet = Math.round(y_richtung*100)/100 ;
 //Runden auf 2 Nachkommastellen
 var abstand_normiert = Math.round((Math.pow(abstand_sp_max, 2) / spruenge)*100)/100
 //Quotient aus Abstandsquadrat und Anzahl der Sprünge (sollte proportional zu delta t sein) auf 2 Nachkommastellen
-
-
   x_gerundet_ausg += + x_gerundet + "<br>";
   y_gerundet_ausg += + y_gerundet + "<br>";
   abstand_normiert_ausg += + abstand_normiert + "<br>";
   abstand_sp_max_ausg += + abstand_sp_max + "<br>";
   //Alle Simulationen 
+ var sum_abstand_normiert = sum_abstand_normiert + abstand_normiert
+ 
 }
 
+var durchsch_abstand_normiert = Math.round((sum_abstand_normiert / simulationen)*100)/100
 
 document.getElementById("x").innerHTML = x_gerundet_ausg;
 document.getElementById("y").innerHTML = y_gerundet_ausg;
 document.getElementById("abstand").innerHTML = abstand_sp_max_ausg;
 document.getElementById("abstand_norm").innerHTML = abstand_normiert_ausg;
+document.getElementById("durchsch_abstand_norm").innerHTML = durchsch_abstand_normiert;
 //Ausgabe
 }
-
 </script>
 
 
