@@ -95,7 +95,8 @@ abstand_sp_max=abstand_sp
 var x_gerundet = Math.round(x_richtung*100)/100 ;
 var y_gerundet = Math.round(y_richtung*100)/100 ;
 //Runden auf 2 Nachkommastellen
-var abstand_normiert = Math.round((Math.pow(abstand_sp_max, 2) / spruenge)*100)/100
+    var abstand_normiert = Math.pow(abstand_sp_max, 2) / spruenge
+//var abstand_normiert = Math.round((Math.pow(abstand_sp_max, 2) / spruenge)*100)/100
 //Quotient aus Abstandsquadrat und Anzahl der Sprünge (sollte proportional zu delta t sein) auf 2 Nachkommastellen
   x_gerundet_ausg += + x_gerundet + "<br>";
   y_gerundet_ausg += + y_gerundet + "<br>";
